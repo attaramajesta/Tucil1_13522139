@@ -3,7 +3,7 @@
 # import sys
 # import random
 
-# def generate_input():
+# def cli_input():
 #     """
 #     Generate input via CLI.
 #     """
@@ -40,7 +40,7 @@
 #         except ValueError:
 #             print("Error: Input incompatible. Restarting input process... \n\n")
 
-# def read_input(filename):
+# def file_input(filename):
 #     with open(filename, 'r') as file:
 #         buffer_size = int(file.readline())
 #         matrix_size = tuple(map(int, file.readline().split()))
@@ -106,7 +106,7 @@
 #             reward += found * reward_value
 #     return reward
 
-# def find_paths(matrix, sequences, x, y, visited, path, max_path, max_reward):
+# def search_token(matrix, sequences, x, y, visited, path, max_path, max_reward):
 #     rows = len(matrix)
 #     cols = len(matrix[0])
 
@@ -126,17 +126,17 @@
 #         if len(path) % 2 == 0:
 #             for j in range(-(rows-1),rows-1):
 #                 if j != 0:
-#                     find_paths(matrix, sequences, x, y + j, visited, path, max_path, max_reward)
+#                     search_token(matrix, sequences, x, y + j, visited, path, max_path, max_reward)
 #         elif len(path) % 2 == 1:
 #             for i in range(-(cols-1),cols-1):
 #                 if i != 0:
-#                     find_paths(matrix, sequences, x + i, y, visited, path, max_path, max_reward)
+#                     search_token(matrix, sequences, x + i, y, visited, path, max_path, max_reward)
 
 #     # Backtrack
 #     visited[x][y] = False
 #     path.pop()
 
-# def find_all_paths(buffer_size, matrix, sequences):
+# def find_buffer(buffer_size, matrix, sequences):
 #     rows = len(matrix)
 #     cols = len(matrix[0])
 #     max_reward = [0]
@@ -144,7 +144,7 @@
 
 #     for j in range(cols):
 #         visited = [[False for _ in range(cols)] for _ in range(rows)]
-#         find_paths(matrix, sequences, 0, j, visited, [], max_path, max_reward)
+#         search_token(matrix, sequences, 0, j, visited, [], max_path, max_reward)
 
 #     return max_path
 
@@ -160,15 +160,15 @@
 #     print("1. File\n2. Generate\n")
 #     choice = input("Pilihan: ")
 #     if choice == "1":
-#         buffer_size, matrix, sequences = read_input('input.txt')
+#         buffer_size, matrix, sequences = file_input('input.txt')
 #     elif choice == "2":
-#         buffer_size, matrix, sequences = generate_input() 
+#         buffer_size, matrix, sequences = cli_input() 
 #     else:
 #         print("Error: Pilihan tidak valid. Keluar... \n\n")
 #         sys.exit(1)
 
 #     start_time = time.time()
-#     max_path = find_all_paths(buffer_size, matrix, sequences)
+#     max_path = find_buffer(buffer_size, matrix, sequences)
 #     reward = calculate_reward([id for _, _, id in max_path], sequences)
 #     execution_time = f'{(time.time() - start_time) * 1000:.2f} ms'
 
@@ -193,7 +193,7 @@ import sys
 import random
 import numpy as np
 
-def generate_input():
+def cli_input():
     while True:
         try:
             num_unique_tokens = int(input("\nJumlah token: "))
@@ -218,7 +218,7 @@ def generate_input():
         except ValueError:
             print("Error: Input tidak sesuai. Proses input diulang... \n\n")
 
-def read_input(filename):
+def file_input(filename):
     with open(filename, 'r') as file:
         buffer_size = int(file.readline())
         matrix_size = tuple(map(int, file.readline().split()))
@@ -286,7 +286,7 @@ def calculate_reward(path, sequences, lps_cache):
             reward += found * reward_value
     return reward
 
-def find_paths(matrix, sequences, x, y, visited, path, max_path, max_reward, lps_cache):
+def search_token(matrix, sequences, x, y, visited, path, max_path, max_reward, lps_cache):
     rows, cols = matrix.shape
 
     if x < 0 or x >= rows or y < 0 or y >= cols or visited[x][y]:
@@ -305,23 +305,23 @@ def find_paths(matrix, sequences, x, y, visited, path, max_path, max_reward, lps
         if len(path) % 2 == 0:
             for j in range(-(rows - 1), rows - 1):
                 if j != 0:
-                    find_paths(matrix, sequences, x, y + j, visited, path, max_path, max_reward, lps_cache)
+                    search_token(matrix, sequences, x, y + j, visited, path, max_path, max_reward, lps_cache)
         elif len(path) % 2 == 1:
             for i in range(-(cols - 1), cols - 1):
                 if i != 0:
-                    find_paths(matrix, sequences, x + i, y, visited, path, max_path, max_reward, lps_cache)
+                    search_token(matrix, sequences, x + i, y, visited, path, max_path, max_reward, lps_cache)
 
     visited[x][y] = False
     path.pop()
 
-def find_all_paths(buffer_size, matrix, sequences, lps_cache):
+def find_buffer(buffer_size, matrix, sequences, lps_cache):
     rows, cols = matrix.shape
     max_reward = [0]
     max_path = []
     visited = np.zeros_like(matrix, dtype=bool)
 
     for j in range(cols):
-        find_paths(matrix, sequences, 0, j, visited, [], max_path, max_reward, lps_cache)
+        search_token(matrix, sequences, 0, j, visited, [], max_path, max_reward, lps_cache)
 
     return max_path
 
@@ -337,16 +337,16 @@ if __name__ == "__main__":
     print("1. File\n2. Generate\n")
     choice = input("Pilihan: ")
     if choice == "1":
-        buffer_size, matrix, sequences = read_input('input.txt')
+        buffer_size, matrix, sequences = file_input('input.txt')
     elif choice == "2":
-        buffer_size, matrix, sequences = generate_input()
+        buffer_size, matrix, sequences = cli_input()
     else:
         print("Error: Pilihan tidak valid. Keluar... \n\n")
         sys.exit(1)
 
     lps_cache = {}
     start_time = time.time()
-    max_path = find_all_paths(buffer_size, matrix, sequences, lps_cache)
+    max_path = find_buffer(buffer_size, matrix, sequences, lps_cache)
     reward = calculate_reward([id for _, _, id in max_path], sequences, lps_cache)
     execution_time = f'{(time.time() - start_time) * 1000:.2f} ms'
 
