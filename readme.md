@@ -1,5 +1,4 @@
-# Tugas Kecil 1 Strategi Algoritma Teknik Informatika
-# Semester II Tahun 2023/2024
+# Tugas Kecil 1 Strategi Algoritma - Semester II Tahun 2023/2024
 
 ## Deskripsi :
 A program designed to find the optimal solution for Cyberpunk 2077's Breach Protocol mini-game, where players hack local ICE systems. It utilizes the Brute Force algorithm to navigate through matrices, sequences, and buffer sizes, aiming to maximize rewards. The program provides prompt outputs of the maximum reward, buffer contents, token coordinates, and execution time, offering players efficient hacking strategies
@@ -11,21 +10,3 @@ A program designed to find the optimal solution for Cyberpunk 2077's Breach Prot
 
 ## Developer :
 Attara Majesta Ayub       / 13522139
-
-## Stucture :
-src
-|--back-end
-    |--_pyache_
-    |--CBIR
-    |--image
-    |--instance
-    |--static
-    |--templates
-        |--venv
-        |app.py
-|--front-end    
-    |--css
-    |--font
-    |--images
-    |--js
-    |index.html
