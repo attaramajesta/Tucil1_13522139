@@ -1,12 +1,12 @@
+import time
+import random
+import numpy as np
 from tkinter import *
 from tkinter import messagebox
 from tkinter.ttk import *
 import main
-import numpy as np
-import random
-import time
 
-#Auto fill matrix (rand)
+# Auto fill matrix (rand)
 def fill_matrix_randomly():
     tokens = ['BD', '1C', '7A', '55', 'E9']
     for i in range(rows):
@@ -14,7 +14,7 @@ def fill_matrix_randomly():
             token = np.random.choice(tokens)
             text_var[i][j].set(token)
 
-#Auto fill sequences (rand)
+# Auto fill sequences (rand)
 def fill_sequences():
     num_sequences = 3
     max_sequence_size = 3
@@ -27,7 +27,7 @@ def fill_sequences():
         reward = random.choice([10, 20, 30])
         additional_input.insert(END, f"{sequence}\n{reward}\n")
 
-#Solve path
+# Solve path
 def solve_path():
     buffer_size = int(buffsize_choosen.get())
     matrix = np.array([[text_var[i][j].get() for j in range(cols)] for i in range(rows)])
@@ -44,22 +44,21 @@ def solve_path():
     max_path = main.find_buffer(buffer_size, matrix, sequences, lps_cache)
     reward = main.calculate_reward([id for _, _, id in max_path], sequences, lps_cache)
     execution_time = f'{(time.time() - start_time) * 1000:.2f} ms'
-    print(f'Execution time: {execution_time}')
 
     label_result = LabelFrame(root, text=f"Result (Execution Time: {execution_time})")
-    label_result.pack(expand='yes', fill='both')
+    label_result.pack(expand='yes', fill='both', side='left')
 
     if reward > 0:
         max_path_str = '\n'.join([f'{y + 1},{x + 1}' for x, y, _ in max_path])
         ids_str = ' '.join([id for _, _, id in max_path])
 
-        reward_label = Label(label_result, text=f"Reward: {reward}", font=('arial', 10))
+        reward_label = Label(label_result, text=f"REWARD: {reward}", font=('arial', 10))
         reward_label.grid(row=2, column=0, padx=10, pady=1, sticky='w')
 
-        ids_label = Label(label_result, text=f"Tokens: {ids_str}", font=('arial', 10))
+        ids_label = Label(label_result, text=f"TOKENS: {ids_str}", font=('arial', 10))
         ids_label.grid(row=1, column=0, padx=10, pady=1, sticky='w')
 
-        path_label = Label(label_result, text=f"Path:\n{max_path_str}", font=('arial', 10))
+        path_label = Label(label_result, text=f"\nPATH:\n{max_path_str}", font=('arial', 10))
         path_label.grid(row=0, column=0, padx=10, pady=1, sticky='w')
 
     else:
@@ -77,9 +76,9 @@ def solve_path():
     save_btn = Button(label_main, text='Save', width=10, command=save_result)
     save_btn.grid(row=3, column=1, padx=10, pady=10, sticky='n')
 
-#Master window
+# Master window
 root = Tk()
-root.geometry('580x500')
+root.geometry('800x510')
 
 # Scroll bar
 scrollbar = Scrollbar(root, orient=VERTICAL)
@@ -100,14 +99,14 @@ helpmenu = Menu(menu)
 menu.add_cascade(label='Help', menu=helpmenu)
 helpmenu.add_command(label='About', command=display_about)
 
-#Title
+# Title
 title = 'CYBERPUNK 777\nBeach Protocol Solver'
 root.title(title)
-messageVar = Message(root, text=title, font=('arial', 10, 'bold'))
-messageVar.config(bg='lightgreen', fg='black', width=200, relief='raised', justify='center')
+messageVar = Message(root, text=title, font=('@Kozuka Mincho Pr6N L', 15, 'bold'))
+messageVar.config(bg='lightgreen', fg='black', width=250, relief='raised', justify='center')
 messageVar.pack(pady=10)
 
-#Select buffer size
+# Select buffer size
 label_buffer = LabelFrame(root, text="Buffer Size")
 label_buffer.pack(expand='yes', fill='both')
 label_buff_title = Label(label_buffer, text="Select the buffer size :", font=("Times New Roman", 10))
@@ -119,9 +118,9 @@ buffsize_choosen['values'] = ('3', '4', '5', '6', '7')
 buffsize_choosen.grid(column=1, row=5)
 buffsize_choosen.current(0)
 
-#Main label for matrix and sequences
+# Main label for matrix and sequences
 label_main = LabelFrame(root, text="Main Path")
-label_main.pack(expand='yes', fill='both')
+label_main.pack(expand='yes', fill='both', side='right')
 
 label_matrix = Label(label_main, text="CODE MATRIX", font=('arial', 10, 'bold'))
 label_matrix.grid(row=0, column=0, padx=10, pady=10, sticky='w')
@@ -139,7 +138,7 @@ for i in range(rows):
         entry = Entry(frame_matrix, width=5, font=('Arial', 10), textvariable=text_var[i][j])
         entry.grid(row=i, column=j, padx=3, pady=3)
 
-#Random button
+# Random button
 random_btn = Button(label_main, text='Random', width=10, command=fill_matrix_randomly)
 random_btn.grid(row=2, column=0, padx=10, pady=10)
 
