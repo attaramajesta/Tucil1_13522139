@@ -86,7 +86,7 @@ scrollbar.pack(side=RIGHT, fill=Y)
 
 # About
 def display_about():
-    about_info = "A program designed to find the optimal solution for Cyberpunk 2077's Breach Protocol mini-game. To generate new solution, exit and rerun the program.\n\n Developed by Attara Majesta A. (13522139)"
+    about_info = "STRICTLY FOR TOKENS: BD 1C 7A 55 E9\n\nA program designed to find the optimal solution for Cyberpunk 2077's Breach Protocol mini-game. To generate new solution, exit and rerun the program.\nDeveloped by Attara Majesta A. (13522139)"
     messagebox.showinfo("About", about_info)
 
 # Menu (exit)
@@ -105,6 +105,11 @@ root.title(title)
 messageVar = Message(root, text=title, font=('@Kozuka Mincho Pr6N L', 15, 'bold'))
 messageVar.config(bg='lightgreen', fg='black', width=250, relief='raised', justify='center')
 messageVar.pack(pady=10)
+
+subtitle = 'STRICTLY FOR TOKENS: BD 1C 7A 55 E9'
+message_sub = Message(root, text=subtitle, font=('@Kozuka Mincho Pr6N L', 10, 'bold'))
+message_sub.config(bg='red', fg='black', width=500, relief='raised', justify='center')
+message_sub.pack(pady=5)
 
 # Select buffer size
 label_buffer = LabelFrame(root, text="Buffer Size")
