@@ -78,7 +78,7 @@ def solve_path():
 
 # Master window
 root = Tk()
-root.geometry('800x510')
+root.geometry('800x600')
 
 # Scroll bar
 scrollbar = Scrollbar(root, orient=VERTICAL)
