@@ -286,7 +286,7 @@ def calculate_reward(path, sequences, lps_cache):
             reward += found * reward_value
     return reward
 
-def search_token(matrix, sequences, x, y, visited, path, max_path, max_reward, lps_cache):
+def search_token(matrix, sequences, x, y, visited, path, max_path, max_reward, lps_cache, buffer_size):
     rows, cols = matrix.shape
 
     if x < 0 or x >= rows or y < 0 or y >= cols or visited[x][y]:
@@ -305,11 +305,11 @@ def search_token(matrix, sequences, x, y, visited, path, max_path, max_reward, l
         if len(path) % 2 == 0:
             for j in range(-(rows - 1), rows - 1):
                 if j != 0:
-                    search_token(matrix, sequences, x, y + j, visited, path, max_path, max_reward, lps_cache)
+                    search_token(matrix, sequences, x, y + j, visited, path, max_path, max_reward, lps_cache, buffer_size)
         elif len(path) % 2 == 1:
             for i in range(-(cols - 1), cols - 1):
                 if i != 0:
-                    search_token(matrix, sequences, x + i, y, visited, path, max_path, max_reward, lps_cache)
+                    search_token(matrix, sequences, x + i, y, visited, path, max_path, max_reward, lps_cache, buffer_size)
 
     visited[x][y] = False
     path.pop()
@@ -321,7 +321,7 @@ def find_buffer(buffer_size, matrix, sequences, lps_cache):
     visited = np.zeros_like(matrix, dtype=bool)
 
     for j in range(cols):
-        search_token(matrix, sequences, 0, j, visited, [], max_path, max_reward, lps_cache)
+        search_token(matrix, sequences, 0, j, visited, [], max_path, max_reward, lps_cache, buffer_size)
 
     return max_path
 
