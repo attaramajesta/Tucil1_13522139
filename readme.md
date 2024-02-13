@@ -6,7 +6,8 @@ A program designed to find the optimal solution for Cyberpunk 2077's Breach Prot
 ## How To Use :
 1. Ensure you have Python installed along with an appropriate IDE. Developer used ver 3.8.10 64-bit.
 2. Make sure your environment is compatible with NumPy as the code utilizes it.
-3. Simply run the source code namely 'main.py' in folder 'src' to use the program.
+3. Run the source code namely 'main.py' in folder 'src' to interact with program via CLI
+3. Run the code namely 'gui.py' in folder 'src' to interact with program via GUI
 
 ## Developer :
 Attara Majesta Ayub       / 13522139
